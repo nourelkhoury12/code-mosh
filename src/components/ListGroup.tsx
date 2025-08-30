@@ -3,9 +3,10 @@ import { useState } from "react";
 interface Props {
     items: string [];
     heading: string;
+    onSelectedItem: (item: string) => void;
 }
 
-function ListGroup({items, heading} : Props){
+function ListGroup({items, heading, onSelectedItem} : Props){
 
     const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -15,7 +16,14 @@ function ListGroup({items, heading} : Props){
         {items.length === 0 && <p>Items not founds</p>}
         <ul className="list-group">
             {items.map((item,index) => (
-                <li className={selectedIndex === index ? "list-group-item active" : "list-group-item"} onClick={() => setSelectedIndex(index)} key={item}>{item}</li>
+                <li 
+                    className={selectedIndex === index ? "list-group-item active" : "list-group-item"} 
+                    onClick={() => {
+                        setSelectedIndex(index); 
+                        onSelectedItem(item)
+                    }} 
+                    key={item}
+                    >{item}</li>
             ))}
         </ul>
         </>
